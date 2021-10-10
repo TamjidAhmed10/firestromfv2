@@ -1,6 +1,11 @@
+import Link from "next/link";
 const LoginSucess = ({ posts }) => {
   return (
     <div>
+      <Link href="/admin/createpost" passHref>
+        <button className="btn btn-lg">Create a new post</button>
+      </Link>
+
       <div className="card lg:card-side bordered">
         <figure>
           {/* eslint-disable-next-line @next/next/no-img-element */}

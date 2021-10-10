@@ -11,9 +11,16 @@ const Navbar = () => {
           </div>
           <div className="flex-none hidden md:flex md:mr-28">
             <div className="flex items-stretch">
-              <a className="btn btn-ghost btn-sm rounded-btn">Portfolio</a>
-              <a className="btn btn-ghost btn-sm rounded-btn">Contact</a>
-              <a className="btn btn-ghost btn-sm rounded-btn">About</a>
+              <a className="cursor-pointer block mx-4 border-b-2 border-black">Home</a>
+              <a className="cursor-pointer block mx-4 transition duration-500 ease-in-out border-b-2 border-transparent hover:border-gray-900">
+                Portfolio
+              </a>
+              <a className="cursor-pointer block mx-4 transition duration-500 ease-in-out border-b-2 border-transparent hover:border-gray-900">
+                Contact
+              </a>
+              <a className="cursor-pointer block mx-4 transition duration-500 ease-in-out border-b-2 border-transparent hover:border-gray-900">
+                About
+              </a>
             </div>
           </div>
 
