@@ -1,9 +1,11 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { CKEditor } from "ckeditor4-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import app from "../../../config/fire";
 import Alert from "../../../components/Alert";
+import { useRouter } from "next/router";
 import { collection, addDoc, getFirestore } from "firebase/firestore";
+import { onAuthStateChanged, getAuth } from "firebase/auth";
 interface Inputs {
   slug: string;
   title: string;
@@ -23,23 +25,55 @@ const CreatePost: React.FC<Props> = () => {
     formState: { errors },
     reset,
   } = useForm<Inputs>();
-
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
+  const [checkSignedIn, setCheckSignedIn]: any = useState("");
+  const auth = getAuth(app);
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     data["html"] = ckEditorData;
+
     const db = getFirestore(app);
 
     try {
-        const docRef = await addDoc(collection(db, "posts"), data);
-        
-        console.log("Document written with ID: ", docRef.id);
-        <Alert message="Success Fully logged" />
+      const docRef = await addDoc(collection(db, "posts"), data);
+
+      console.log("Document written with ID: ", docRef.id);
+      <Alert message="Success Fully logged" />;
       reset();
     } catch (e) {
-        console.error("Error adding document: ", e);
-        <Alert message="Unsuccess Oparation" />;
+      console.error("Error adding document: ", e);
+      <Alert message="Unsuccess Oparation" />;
       reset();
     }
   };
+  useEffect(() => {
+    setIsLoading(true);
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setCheckSignedIn(user);
+        console.log("user", user);
+      } else {
+        setCheckSignedIn("");
+        console.log("not signed in");
+      }
+      setIsLoading(false);
+    });
+  }, [auth]);
+
+  if (isLoading) {
+    return (
+      <div>
+        <div className=" flex justify-center items-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500" />
+        </div>
+      </div>
+    );
+  }
+  if (checkSignedIn == "") {
+    router.push("/admin");
+  }
+
   return (
     <div>
       <div className="custom-width mx-auto">
