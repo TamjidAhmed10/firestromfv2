@@ -13,7 +13,7 @@ interface Props {
   posts: any;
 }
 
-const Admin: React.FC<Props> = ({posts}) => {
+const Admin: React.FC<Props> = ({ posts }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [checkSignedIn, setCheckSignedIn]: any = useState("");
   const auth = getAuth(app);
@@ -48,18 +48,19 @@ const Admin: React.FC<Props> = ({posts}) => {
     <div>
       {checkSignedIn ? (
         <>
-          <LoginSucess posts={posts}/>
+          <LoginSucess posts={posts} />
         </>
       ) : isLoading ? (
         <>
-          <div className=" flex justify-center items-center">
+          <div className=" flex items-center justify-center h-screen">
             <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500" />
           </div>
         </>
       ) : (
-        <>
-          <div className="p-10 card bg-base-200">
+        <div className="flex items-center justify-center h-screen">
+          <div className="p-10 card bg-base-200 w-96">
             <form onSubmit={handleSubmit(onSubmit)}>
+              <h2 className="text-xl">Login</h2>
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Email</span>
@@ -89,7 +90,7 @@ const Admin: React.FC<Props> = ({posts}) => {
               </div>
             </form>
           </div>
-        </>
+        </div>
       )}
     </div>
   );

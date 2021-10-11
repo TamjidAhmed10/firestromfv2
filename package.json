@@ -9,7 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^30.0.0",
+    "@ckeditor/ckeditor5-react": "^3.0.3",
     "@headlessui/react": "^1.4.1",
+    "@tailwindcss/typography": "^0.4.1",
     "ckeditor4-react": "^2.0.1",
     "daisyui": "^1.14.2",
     "firebase": "^9.1.1",

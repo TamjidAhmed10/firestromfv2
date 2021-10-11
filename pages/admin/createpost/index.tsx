@@ -15,6 +15,7 @@ interface Inputs {
   feature_image_alt: string;
   feature_image_alt_caption: string;
   catagory: string;
+  author: string;
 }
 interface Props {}
 const CreatePost: React.FC<Props> = () => {
@@ -30,6 +31,9 @@ const CreatePost: React.FC<Props> = () => {
   const [checkSignedIn, setCheckSignedIn]: any = useState("");
   const auth = getAuth(app);
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const utcDate1 = new Date();
+    const utcDate = utcDate1.toUTCString().slice(5, 16);
+    data["published_date"] = utcDate;
     data["html"] = ckEditorData;
 
     const db = getFirestore(app);
@@ -38,7 +42,6 @@ const CreatePost: React.FC<Props> = () => {
       const docRef = await addDoc(collection(db, "posts"), data);
 
       console.log("Document written with ID: ", docRef.id);
-      <Alert message="Success Fully logged" />;
       reset();
     } catch (e) {
       console.error("Error adding document: ", e);
@@ -64,7 +67,7 @@ const CreatePost: React.FC<Props> = () => {
   if (isLoading) {
     return (
       <div>
-        <div className=" flex justify-center items-center">
+        <div className=" flex items-center justify-center h-screen">
           <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500" />
         </div>
       </div>
@@ -74,7 +77,7 @@ const CreatePost: React.FC<Props> = () => {
     router.push("/admin");
     return (
       <div>
-        <div className=" flex justify-center items-center">
+        <div className=" flex items-center justify-center h-screen">
           <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500" />
         </div>
       </div>
@@ -97,6 +100,7 @@ const CreatePost: React.FC<Props> = () => {
               {...register("slug", { required: true })}
             />
           </div>
+
           <div className="form-control">
             <label className="label">
               <span className="label-text">Title</span>
@@ -117,6 +121,17 @@ const CreatePost: React.FC<Props> = () => {
               placeholder="Small Description within 54 Characters"
               className="input input-primary input-bordered"
               {...register("description", { required: true, maxLength: 54 })}
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Author </span>
+            </label>
+            <input
+              type="text"
+              placeholder="Author Name"
+              className="input input-primary input-bordered"
+              {...register("author", { required: true })}
             />
           </div>
           <div className="mt-4">
