@@ -25,7 +25,7 @@ const Admin: React.FC<Props> = ({ posts }) => {
         console.log("success");
       })
       .catch((error) => {
-        console.log("Wrong Authentication");
+        console.log("Wrong Authentication" + error);
       });
   };
 

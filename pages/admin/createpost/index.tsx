@@ -34,9 +34,10 @@ const CreatePost: React.FC<Props> = () => {
   const [checkSignedIn, setCheckSignedIn]: any = useState("");
   const auth = getAuth(app);
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    if (editorRef.current) {
-      setckEditorData(editorRef.current.getContent());
-    }
+    // if (editorRef.current) {
+    setckEditorData(editorRef.current.getContent());
+    console.log(ckEditorData);
+    // }
     const utcDate1 = new Date();
     const utcDate = utcDate1.toUTCString().slice(5, 16);
     data["published_date"] = utcDate;
@@ -143,7 +144,7 @@ const CreatePost: React.FC<Props> = () => {
           <div className="mt-4">
             <p>Enter Your Blog Content Here</p>
             <Editor
-              apiKey={process.env.NEXT_PUBLIC_API_KEY}
+              apiKey={process.env.NEXT_PUBLIC_TINY_API_KEY}
               onInit={(evt, editor) => (editorRef.current = editor)}
               initialValue="<p>This is the initial content of the editor.</p>"
               init={{
@@ -155,7 +156,7 @@ const CreatePost: React.FC<Props> = () => {
                   "insertdatetime media table paste code help wordcount",
                 ],
                 toolbar:
-                  "undo redo | formatselect | " +
+                  "undo redo |fullscreen formatselect | " +
                   "bold italic backcolor | alignleft aligncenter " +
                   "alignright alignjustify | bullist numlist outdent image indent | " +
                   "removeformat | help",
