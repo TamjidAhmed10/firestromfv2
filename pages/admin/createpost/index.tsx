@@ -6,6 +6,8 @@ import Alert from "../../../components/Alert";
 import { useRouter } from "next/router";
 import { collection, addDoc, getFirestore } from "firebase/firestore";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
+import { useRef } from "react";
+import { Editor } from "@tinymce/tinymce-react";
 interface Inputs {
   slug: string;
   title: string;
@@ -19,6 +21,7 @@ interface Inputs {
 }
 interface Props {}
 const CreatePost: React.FC<Props> = () => {
+  const editorRef = useRef(null);
   const [ckEditorData, setckEditorData] = useState("");
   const {
     register,
@@ -31,6 +34,9 @@ const CreatePost: React.FC<Props> = () => {
   const [checkSignedIn, setCheckSignedIn]: any = useState("");
   const auth = getAuth(app);
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    if (editorRef.current) {
+      setckEditorData(editorRef.current.getContent());
+    }
     const utcDate1 = new Date();
     const utcDate = utcDate1.toUTCString().slice(5, 16);
     data["published_date"] = utcDate;
@@ -136,9 +142,24 @@ const CreatePost: React.FC<Props> = () => {
           </div>
           <div className="mt-4">
             <p>Enter Your Blog Content Here</p>
-            <CKEditor
-              onChange={(event) => {
-                setckEditorData(event.editor.getData());
+            <Editor
+              apiKey={process.env.NEXT_PUBLIC_API_KEY}
+              onInit={(evt, editor) => (editorRef.current = editor)}
+              initialValue="<p>This is the initial content of the editor.</p>"
+              init={{
+                height: 600,
+                menubar: false,
+                plugins: [
+                  "advlist autolink lists link image charmap print preview anchor",
+                  "searchreplace visualblocks code fullscreen",
+                  "insertdatetime media table paste code help wordcount",
+                ],
+                toolbar:
+                  "undo redo | formatselect | " +
+                  "bold italic backcolor | alignleft aligncenter " +
+                  "alignright alignjustify | bullist numlist outdent image indent | " +
+                  "removeformat | help",
+                image_caption: true,
               }}
             />
           </div>
