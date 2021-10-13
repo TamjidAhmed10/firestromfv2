@@ -8,6 +8,8 @@ import app from "../../config/fire";
 import LoginSucess from "../../components/LoginSucess";
 import { useForm } from "react-hook-form";
 import getAllThePosts from "../../functions/getAllThePosts";
+import AdminNavbar from "../../components/AdminNavbar";
+import Footer from "../../components/Footer";
 
 interface Props {
   posts: any;
@@ -48,7 +50,15 @@ const Admin: React.FC<Props> = ({ posts }) => {
     <div>
       {checkSignedIn ? (
         <>
+          <AdminNavbar />
           <LoginSucess posts={posts} />
+          {posts.length < 4 ? (
+            <div className=" md:absolute md:bottom-0 md:w-full">
+              <Footer />
+            </div>
+          ) : (
+            <Footer />
+          )}
         </>
       ) : isLoading ? (
         <>

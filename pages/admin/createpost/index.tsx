@@ -1,5 +1,4 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { CKEditor } from "ckeditor4-react";
 import { useEffect, useState } from "react";
 import app from "../../../config/fire";
 import Alert from "../../../components/Alert";
@@ -22,7 +21,7 @@ interface Inputs {
 interface Props {}
 const CreatePost: React.FC<Props> = () => {
   const editorRef = useRef(null);
-  const [ckEditorData, setckEditorData] = useState("");
+  const [editorData, setEditorData] = useState("");
   const {
     register,
     handleSubmit,
@@ -33,29 +32,7 @@ const CreatePost: React.FC<Props> = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [checkSignedIn, setCheckSignedIn]: any = useState("");
   const auth = getAuth(app);
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    // if (editorRef.current) {
-    setckEditorData(editorRef.current.getContent());
-    console.log(ckEditorData);
-    // }
-    const utcDate1 = new Date();
-    const utcDate = utcDate1.toUTCString().slice(5, 16);
-    data["published_date"] = utcDate;
-    data["html"] = ckEditorData;
-
-    const db = getFirestore(app);
-
-    try {
-      const docRef = await addDoc(collection(db, "posts"), data);
-
-      console.log("Document written with ID: ", docRef.id);
-      reset();
-    } catch (e) {
-      console.error("Error adding document: ", e);
-      <Alert message="Unsuccess Oparation" />;
-      reset();
-    }
-  };
+  const [contentDataCheck, setContentDataCheck] = useState(false);
   useEffect(() => {
     setIsLoading(true);
 
@@ -70,6 +47,27 @@ const CreatePost: React.FC<Props> = () => {
       setIsLoading(false);
     });
   }, [auth]);
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    try {
+      const logdata = editorRef.current.getContent();
+
+      const utcDate1 = new Date();
+      const utcDate = utcDate1.toUTCString().slice(5, 16);
+      data["published_date"] = utcDate;
+      data["html"] = logdata;
+      console.log(logdata);
+      const db = getFirestore(app);
+
+      const docRef = await addDoc(collection(db, "posts"), data);
+
+      console.log("Document written with ID: ", docRef.id);
+      reset();
+    } catch (e) {
+      console.error("Error adding document: ", e);
+      reset();
+    }
+  };
 
   if (isLoading) {
     return (
@@ -146,7 +144,6 @@ const CreatePost: React.FC<Props> = () => {
             <Editor
               apiKey={process.env.NEXT_PUBLIC_TINY_API_KEY}
               onInit={(evt, editor) => (editorRef.current = editor)}
-              initialValue="<p>This is the initial content of the editor.</p>"
               init={{
                 height: 600,
                 menubar: false,

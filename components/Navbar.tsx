@@ -5,13 +5,15 @@ const Navbar = () => {
   return (
     <div>
       <div>
-        <div className="navbar mb-2 shadow-lg bg-gray-300 text-gray-800">
+        <div className="navbar mb-2 shadow-sm bg-gray-100 text-gray-800">
           <div className="flex-1 px-2 mx-2 md:ml-28">
             <span className="text-lg font-bold">Memoir</span>
           </div>
           <div className="flex-none hidden md:flex md:mr-28">
             <div className="flex items-stretch">
-              <a className="cursor-pointer block mx-4 border-b-2 border-black">Home</a>
+              <a className="cursor-pointer block mx-4 border-b-2 border-black">
+                Home
+              </a>
               <a className="cursor-pointer block mx-4 transition duration-500 ease-in-out border-b-2 border-transparent hover:border-gray-900">
                 Portfolio
               </a>
