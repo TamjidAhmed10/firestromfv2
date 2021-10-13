@@ -93,6 +93,7 @@ const CreatePost: React.FC<Props> = () => {
     <div>
       <div className="custom-width mx-auto">
         <h2 className="text-3xl">User Form</h2>
+        {process.env.NEXT_PUBLIC_TINY_API_KEY}
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control">
             <label className="label">
