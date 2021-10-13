@@ -1,7 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useEffect, useState } from "react";
 import app from "../../../config/fire";
-import Alert from "../../../components/Alert";
 import { useRouter } from "next/router";
 import { collection, addDoc, getFirestore } from "firebase/firestore";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
@@ -21,7 +20,6 @@ interface Inputs {
 interface Props {}
 const CreatePost: React.FC<Props> = () => {
   const editorRef = useRef(null);
-  const [editorData, setEditorData] = useState("");
   const {
     register,
     handleSubmit,
@@ -32,7 +30,6 @@ const CreatePost: React.FC<Props> = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [checkSignedIn, setCheckSignedIn]: any = useState("");
   const auth = getAuth(app);
-  const [contentDataCheck, setContentDataCheck] = useState(false);
   useEffect(() => {
     setIsLoading(true);
 
