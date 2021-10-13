@@ -9,7 +9,7 @@ const Posts: React.FC<PostProps> = ({ posts }) => {
   return (
     <>
       <Navbar />
-      <div className="prose mx-auto">
+      <div className="prose mx-4 md:mx-auto ">
         <h1 className="">{posts[0].title}</h1>
         <small>{posts[0].author}</small>
         <br />

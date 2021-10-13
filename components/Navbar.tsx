@@ -1,19 +1,26 @@
 import { Popover } from "@headlessui/react";
 import { FaBars } from "react-icons/fa";
+import Link from "next/link";
 
 const Navbar = () => {
   return (
-    <div>
+    <div className="sticky top-0 z-10">
       <div>
         <div className="navbar mb-2 shadow-sm bg-gray-100 text-gray-800">
-          <div className="flex-1 px-2 mx-2 md:ml-28">
-            <span className="text-lg font-bold">Memoir</span>
-          </div>
+          <Link href="/" passHref>
+            <div className="flex-1 px-2 mx-2 md:ml-28 cursor-pointer	">
+              <span className="text-lg font-bold">Memoir</span>
+            </div>
+          </Link>
+
           <div className="flex-none hidden md:flex md:mr-28">
             <div className="flex items-stretch">
-              <a className="cursor-pointer block mx-4 border-b-2 border-black">
-                Home
-              </a>
+              <Link href="/" passHref>
+                <a className="cursor-pointer block mx-4 border-b-2 border-black">
+                  Home
+                </a>
+              </Link>
+
               <a className="cursor-pointer block mx-4 transition duration-500 ease-in-out border-b-2 border-transparent hover:border-gray-900">
                 Portfolio
               </a>
