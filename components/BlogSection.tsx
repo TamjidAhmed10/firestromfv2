@@ -21,7 +21,7 @@ const BlogSection = ({ posts }) => {
                   className="object-cover h-64 w-full"
                 />
               </figure>
-              <div className="card-body">
+              <div className="card-body select-none">
                 <h2 className="card-title">{value.title}</h2>
                 <p>{value.description}</p>
                 <div className="card-actions">
